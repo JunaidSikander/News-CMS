@@ -54,8 +54,8 @@ img.logo{
     color: #fff;
     font-size: 18px;
     font-weight: 600;
-    text-transform: uppercase;
-    display: inline-block;
+    /*text-transform: uppercase;*/
+    /*display: inline-block;*/
 }
 
 #header-admin .admin-logout:hover{

@@ -1,24 +1,27 @@
 <?php include "header.php";
+if ($_SESSION['user_role'] == '0')
+    header("Location: {$hostname}/admin/post.php");
+
 if (isset($_POST['save'])) {
     include "config.php";
 
     //  mysqli_real_escape_string used to save from injecting javascript scripts validate from special characters
-    $fname = mysqli_real_escape_string($connection,$_POST['fname']);
-    $lname = mysqli_real_escape_string($connection,$_POST['lname']);
-    $user = mysqli_real_escape_string($connection,$_POST['user']);
-    $password = mysqli_real_escape_string($connection,md5($_POST['password']));
-    $role = mysqli_real_escape_string($connection,$_POST['role']);
+    $fname = mysqli_real_escape_string($connection, $_POST['fname']);
+    $lname = mysqli_real_escape_string($connection, $_POST['lname']);
+    $user = mysqli_real_escape_string($connection, $_POST['user']);
+    $password = mysqli_real_escape_string($connection, md5($_POST['password']));
+    $role = mysqli_real_escape_string($connection, $_POST['role']);
 
     $QUERY = "SELECT username FROM user WHERE username = '{$user}'";
-    $result = mysqli_query($connection, $QUERY) OR die('Query Failed');
+    $result = mysqli_query($connection, $QUERY) or die('Query Failed');
 
-    if( mysqli_num_rows($result) > 0 ){
+    if (mysqli_num_rows($result) > 0) {
         echo '<p style="color: red; text-align: center; margin: 10px 0;" > Username already taken </p>';
-    }else {
+    } else {
         $QUERY1 = "INSERT INTO user (first_name, last_name, username, password, role)
                     VALUES('{$fname}', '{$lname}', '{$user}', '{$password}', '{$role}')";
 
-        if(mysqli_query($connection, $QUERY1)){
+        if (mysqli_query($connection, $QUERY1)) {
             header("Location: {$hostname}/admin/users.php");
         }
     }
